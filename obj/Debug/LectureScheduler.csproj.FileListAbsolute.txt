@@ -1,0 +1,15 @@
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\bin\Debug\LectureScheduler.exe.config
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\bin\Debug\LectureScheduler.exe
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\bin\Debug\LectureScheduler.pdb
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.csprojResolveAssemblyReference.cache
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\MainWindow.g.cs
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\App.g.cs
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler_MarkupCompile.cache
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler_MarkupCompile.lref
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\MainWindow.baml
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.g.resources
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.Properties.Resources.resources
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.csproj.GenerateResource.cache
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.csproj.CoreCompileInputs.cache
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.exe
+D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.pdb
