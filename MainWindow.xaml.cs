@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,22 +41,17 @@ namespace LectureScheduler
 
     public partial class MainWindow : Window
     {
-        public List<Edge> Graph = new List<Edge>();
+        public List<Edge> EdgeList = new List<Edge>();
+        public List<string> NodeList = new List<string>();
+        Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
+        Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
         public MainWindow()
         {
             InitializeComponent();
-            // Just testing out Edge class and Graph list
-            Edge temp = new Edge("C1","C2");
-            Graph.Add(temp);
-            temp = new Edge("C2", "C3");
-            Graph.Add(temp);
-            string str_out = "";
-            foreach(Edge element in Graph)
-            {
-                str_out += element.FormatOutput();
-            }
-            FileNameLabel.Content = str_out;
+
         }
+
+
 
         // On "Load File" button click...
         private void LoadFileButton_Click(object sender, RoutedEventArgs e)
@@ -65,7 +61,47 @@ namespace LectureScheduler
             Nullable<bool> result = FileDialog.ShowDialog(); // Show file dialog
             if (result == true) // If the file dialog retrieves a file
             {
+                using (StreamReader sr = new StreamReader(FileDialog.FileName))
+                {
+                    string line, target_node, preq_node;
+                    int i;
+                    Edge temp;
+                    while (sr.Peek() >= 0)
+                    {
+                        line = sr.ReadLine();
+                        target_node = "";
+                        i = 0;
+                        // Get current lecture
+                        while ((i < line.Length) && (line[i] != ',') && (line[i] != '.'))
+                        {
+                            target_node += line[i];
+                            i++;
+                        }
+                        if (line[i] != '.') i++;
+                        
+                        // Get prerequisite lecture
+                        while ((i < line.Length) && (line[i] != '.'))
+                        {
+                            preq_node = "";
+                            while ((i < line.Length) && (line[i] != ',') && (line[i] != '.'))
+                            {
+                                preq_node += line[i];
+                                i++;
+                            }
+                            if (line[i] != '.') i++;
+                            temp = new Edge(preq_node, target_node);
+                            EdgeList.Add(temp);
+                        }
+                    }
+                }
+                FileContent.Text = "";
+                foreach(Edge element in EdgeList)
+                {
+                    FileContent.Text += element.FormatOutput();
+                    FileContent.Text += "\n";
+                }
                 FileNameLabel.Content = FileDialog.FileName;
+                
             }
         }
     }

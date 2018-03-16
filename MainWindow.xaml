@@ -13,5 +13,7 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="LoadFileButton" Content="Load File" HorizontalAlignment="Left" Height="41" Margin="10,10,0,0" VerticalAlignment="Top" Width="99" RenderTransformOrigin="0.556,0.146" Click="LoadFileButton_Click"/>
         <Label x:Name="FileNameLabel" Content="No file is loaded." HorizontalAlignment="Left" Height="29" Margin="10,56,0,0" VerticalAlignment="Top" Width="763" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="FileContent" HorizontalAlignment="Left" Height="138" Margin="10,90,0,0" TextWrapping="Wrap" Text="File content will open here..." VerticalAlignment="Top" Width="366"/>
+        <DocumentViewer Grid.Column="1" HorizontalAlignment="Left" Margin="174,125,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
