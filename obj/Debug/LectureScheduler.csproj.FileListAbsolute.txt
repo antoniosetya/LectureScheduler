@@ -1,30 +1,27 @@
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\bin\Debug\LectureScheduler.exe.config
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\bin\Debug\LectureScheduler.exe
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\bin\Debug\LectureScheduler.pdb
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.csprojResolveAssemblyReference.cache
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\MainWindow.g.cs
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\App.g.cs
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler_MarkupCompile.cache
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler_MarkupCompile.lref
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\MainWindow.baml
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.g.resources
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.Properties.Resources.resources
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.csproj.GenerateResource.cache
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.csproj.CoreCompileInputs.cache
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.exe
-D:\Dropbox\Sem IV\Stima\LectureScheduler\LectureScheduler\obj\Debug\LectureScheduler.pdb
-D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.csprojResolveAssemblyReference.cache
-D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\MainWindow.g.cs
-D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\App.g.cs
-D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler_MarkupCompile.cache
-D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler_MarkupCompile.lref
-D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\MainWindow.baml
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\bin\Debug\LectureScheduler.exe.config
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\bin\Debug\LectureScheduler.exe
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\bin\Debug\LectureScheduler.pdb
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\obj\Debug\LectureScheduler.csprojResolveAssemblyReference.cache
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\obj\Debug\LectureScheduler.Form1.resources
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\obj\Debug\LectureScheduler.Properties.Resources.resources
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\obj\Debug\LectureScheduler.csproj.GenerateResource.cache
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\obj\Debug\LectureScheduler.csproj.CoreCompileInputs.cache
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\obj\Debug\LectureScheduler.exe
+C:\Users\Antonio Setya\Documents\Visual Studio 2017\Projects\LectureScheduler\obj\Debug\LectureScheduler.pdb
 D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.exe
 D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.pdb
 D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\LectureScheduler.exe.config
 D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\LectureScheduler.exe
 D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\LectureScheduler.pdb
-D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.g.resources
+D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\Microsoft.Msagl.dll
+D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\Microsoft.Msagl.Drawing.dll
+D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\Microsoft.Msagl.GraphViewerGdi.dll
+D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\Microsoft.Msagl.xml
+D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\Microsoft.Msagl.Drawing.xml
+D:\Dropbox\Sem IV\Stima\LectureScheduler\bin\Debug\Microsoft.Msagl.GraphViewerGdi.xml
+D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.csprojResolveAssemblyReference.cache
+D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.Form1.resources
 D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.Properties.Resources.resources
 D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.csproj.GenerateResource.cache
 D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.csproj.CoreCompileInputs.cache
+D:\Dropbox\Sem IV\Stima\LectureScheduler\obj\Debug\LectureScheduler.csproj.CopyComplete

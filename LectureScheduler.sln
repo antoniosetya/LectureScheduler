@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LectureScheduler", "LectureScheduler.csproj", "{2F19A268-820C-4FEF-9AC9-A53B5C4AA471}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LectureScheduler", "LectureScheduler.csproj", "{05F62C07-1825-46A4-BD82-EF002102AF37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2F19A268-820C-4FEF-9AC9-A53B5C4AA471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F19A268-820C-4FEF-9AC9-A53B5C4AA471}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F19A268-820C-4FEF-9AC9-A53B5C4AA471}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F19A268-820C-4FEF-9AC9-A53B5C4AA471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05F62C07-1825-46A4-BD82-EF002102AF37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F62C07-1825-46A4-BD82-EF002102AF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F62C07-1825-46A4-BD82-EF002102AF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F62C07-1825-46A4-BD82-EF002102AF37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4088C445-199C-49B5-8120-D56DA592DAA3}
+		SolutionGuid = {5942BA9B-CA03-4B89-BCC2-A637DC2571D6}
 	EndGlobalSection
 EndGlobal
