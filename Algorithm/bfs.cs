@@ -69,11 +69,12 @@ namespace Transcript {
 			while (Course.Count != 0){
 				sems++;
 				linkCourse.Clear();
-				for (int i = 0; i < Course.Count; i++){
-					if (Course[i].isNoPreRequisite()){
-						semesterCourse.Add(sems+Course[i].getCourses());
-						linkCourse.Add(Course[i].getCourses());
-						Course.RemoveAt(i);
+				int nCourse = Course.Count;
+				for (int i = 0; i < nCourse; i++){
+					if (Course[i-linkCourse.Count].isNoPreRequisite()){
+						semesterCourse.Add(sems+Course[i-linkCourse.Count].getCourses());
+						linkCourse.Add(Course[i-linkCourse.Count].getCourses());
+						Course.RemoveAt(i-linkCourse.Count+1);
 					}
 				}
 				for (int i = 0; i < Course.Count; i++){
