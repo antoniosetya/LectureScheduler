@@ -51,24 +51,93 @@ namespace LectureScheduler
                         }
                     }
                 }
-                System.Console.WriteLine(Course.Count);
-                foreach (Courses element in Course)
-                {
-                    FileContent.Text = FileContent.Text + element.FormatOutput();
-                    FileContent.Text = FileContent.Text + "\n";
-                }
-
-                // Bind graph to viewer engine
-                viewer.Graph = graph;
-                // Bind viewer engine to second window
-                GraphWindow.SuspendLayout();
-                viewer.Dock = System.Windows.Forms.DockStyle.Fill;
-                GraphWindow.Controls.Add(viewer);
-                GraphWindow.ResumeLayout();
-                // Shows second window
-                GraphWindow.ShowDialog();
+                DrawGraphFirstTime();
+                // BFS Run
+                BFS();
             }
         }
+
+        private void DrawGraphFirstTime()
+        {
+            // Bind graph to viewer engine
+            viewer.Graph = graph;
+            // Bind viewer engine to second window
+            GraphPanel.SuspendLayout();
+            viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            GraphPanel.Controls.Add(viewer);
+            GraphPanel.ResumeLayout();
+        }
+
+        private void RefreshGraph()
+        {
+            // Bind graph to viewer engine
+            viewer.Graph = graph;
+        }
+
+        private void DetachGraph()
+        {
+            viewer.Graph = null;
+        }
+
+        private void BFS()
+        {
+            List<string> semesterCourse = new List<string>();
+
+            int sems = 0;
+            List<string> linkCourse = new List<string>();
+            while (Course.Count != 0)
+            {
+                sems++;
+                linkCourse.Clear();
+                int nCourse = Course.Count;
+                for (int i = 0; i < nCourse; i++)
+                {
+                    if (Course[i - linkCourse.Count].isNoPreRequisite())
+                    {
+                        // Processing this node
+                        semesterCourse.Add(sems + Course[i - linkCourse.Count].getCourses());
+                        linkCourse.Add(Course[i - linkCourse.Count].getCourses());
+                        Course.RemoveAt(i - linkCourse.Count + 1);
+                    }
+                }
+                for (int i = 0; i < Course.Count; i++)
+                {
+                    for (int j = 0; j < linkCourse.Count; j++)
+                    {
+                        if (Course[i].isPreRequisite(linkCourse[j]))
+                        {
+                            Course[i].setNumberOfPreRequisite(Course[i].getNumberOfPreRequisite() - 1);
+                        }
+                    }
+                }
+            }
+            int semester = 1;
+            FileContent.Text += "Semester " + semester + ":\n";
+            for (int i = 0; i < semesterCourse.Count; i++)
+            {
+                bool semesterN = true;
+                string nString = semester.ToString();
+                for (int j = 0; j < nString.Length; j++)
+                {
+                    if (nString[j] != semesterCourse[i][j])
+                    {
+                        semesterN = false;
+                    }
+                }
+                if (semesterN)
+                {
+                    FileContent.Text += semesterCourse[i].Remove(0, semester.ToString().Length) + "\n";
+                }
+                else
+                {
+                    semester++;
+                    FileContent.Text += "Semester " + semester + ":\n";
+                    FileContent.Text += semesterCourse[i].Remove(0, semester.ToString().Length) + "\n";
+                }
+            }
+        }
+
+
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
