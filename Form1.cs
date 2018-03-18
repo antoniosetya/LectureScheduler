@@ -14,7 +14,6 @@ namespace LectureScheduler
     public partial class Form1 : Form
     {
         List<Courses> Course = new List<Courses>();
-
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer(); // Graph viewer engine
         Microsoft.Msagl.Drawing.Graph graph; // The graph that MSAGL accepts
 
@@ -74,24 +73,6 @@ namespace LectureScheduler
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
-        }
-    }
-
-    public class Edge
-    {
-        // Nodes that are connected by this edge
-        public string N1;
-        public string N2;
-        // ctor
-        public Edge(string _n1 = "", string _n2 = "")
-        {
-            N1 = _n1;
-            N2 = _n2;
-        }
-        // Formats output
-        public string FormatOutput()
-        {
-            return ("<" + N1 + "," + N2 + ">");
         }
     }
 
