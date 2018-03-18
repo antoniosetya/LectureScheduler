@@ -16,6 +16,8 @@ namespace LectureScheduler
         List<Courses> Course = new List<Courses>();
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer(); // Graph viewer engine
         Microsoft.Msagl.Drawing.Graph graph; // The graph that MSAGL accepts
+        List<List<string>> GraphAnim = new List<List<string>>(); // "Animation" data, it stores which node(s) it should animate on each step
+        int CurAnimGraph = 0;
 
         public Form1()
         {
@@ -51,7 +53,9 @@ namespace LectureScheduler
                         }
                     }
                 }
+                label3.Visible = false;
                 DrawGraphFirstTime();
+                AnimGraphNext.Enabled = true;
                 // BFS Run
                 BFS();
             }
@@ -76,6 +80,7 @@ namespace LectureScheduler
 
         private void DetachGraph()
         {
+            // De-Bind graph to viewer engine
             viewer.Graph = null;
         }
 
@@ -111,8 +116,10 @@ namespace LectureScheduler
                     }
                 }
             }
+            // Format output
             int semester = 1;
             FileContent.Text += "Semester " + semester + ":\n";
+            GraphAnim.Add(new List<string>()); // Initialize the first element of graph animation
             for (int i = 0; i < semesterCourse.Count; i++)
             {
                 bool semesterN = true;
@@ -133,7 +140,11 @@ namespace LectureScheduler
                     semester++;
                     FileContent.Text += "Semester " + semester + ":\n";
                     FileContent.Text += semesterCourse[i].Remove(0, semester.ToString().Length) + "\n";
+                    // Initialize the next element of list of graph animation
+                    GraphAnim.Add(new List<string>());  
                 }
+                // Adding this node to graph animation
+                GraphAnim[semester-1].Add(semesterCourse[i].Remove(0, semester.ToString().Length));
             }
         }
 
@@ -142,6 +153,38 @@ namespace LectureScheduler
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void AnimGraphNext_Click(object sender, EventArgs e)
+        {
+            CurAnimGraph++;
+            if (!AnimGraphPrev.Enabled) AnimGraphPrev.Enabled = true;
+            DetachGraph();
+            foreach(string affected_node in GraphAnim[CurAnimGraph-1])
+            {
+                graph.FindNode(affected_node).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+            }
+            RefreshGraph();
+            if (CurAnimGraph == GraphAnim.Count)
+            {
+                AnimGraphNext.Enabled = false;
+            }
+        }
+
+        private void AnimGraphPrev_Click(object sender, EventArgs e)
+        {
+            CurAnimGraph--;
+            if (!AnimGraphNext.Enabled) AnimGraphNext.Enabled = true;
+            DetachGraph();
+            foreach (string affected_node in GraphAnim[CurAnimGraph])
+            {
+                graph.FindNode(affected_node).Attr.FillColor = Microsoft.Msagl.Drawing.Color.White;
+            }
+            RefreshGraph();
+            if (CurAnimGraph == 0)
+            {
+                AnimGraphPrev.Enabled = false;
+            }
         }
     }
 
