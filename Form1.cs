@@ -16,8 +16,8 @@ namespace LectureScheduler
         List<Courses> Course = new List<Courses>();
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer(); // Graph viewer engine
         Microsoft.Msagl.Drawing.Graph graph; // The graph that MSAGL accepts
-        List<List<string>> GraphAnim = new List<List<string>>(); // "Animation" data, it stores which node(s) it should animate on each step
-        int CurAnimGraph = 0;
+        List<List<string>> GraphAnim; // "Animation" data, it stores which node(s) it should animate on each step
+        int CurAnimGraph;
 
         public Form1()
         {
@@ -54,10 +54,21 @@ namespace LectureScheduler
                     }
                 }
                 label3.Visible = false;
+                // Re-initialize graph viewer and animation
                 DrawGraphFirstTime();
+                GraphAnim = new List<List<string>>();
+                CurAnimGraph = 0;
+                // Run topological sort based on user's choice
+                if (radioButton1.Checked)
+                {
+                    BFS();
+                }
+                /* else //radioButton2.Checked
+                {
+                    // DFS();
+                } */
+                AnimGraphPrev.Enabled = false;
                 AnimGraphNext.Enabled = true;
-                // BFS Run
-                BFS();
             }
         }
 
@@ -185,6 +196,16 @@ namespace LectureScheduler
             {
                 AnimGraphPrev.Enabled = false;
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 
