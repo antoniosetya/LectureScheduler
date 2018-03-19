@@ -12,11 +12,11 @@ namespace LectureScheduler
 {
     public partial class Form1 : Form
     {
-        List<Courses> Course = new List<Courses>();
+        List<Courses> Course; // Stores the list of courses
         Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer(); // Graph viewer engine
         Microsoft.Msagl.Drawing.Graph graph; // The graph that MSAGL accepts
         List<List<string>> GraphAnim; // "Animation" data, it stores which node(s) it should animate on each step
-        int CurAnimGraph;
+        int CurAnimGraph; // "Animation" data pointer
         string output_file = "output.html";
 
         public Form1()
@@ -37,6 +37,7 @@ namespace LectureScheduler
             {
                 graph = new Microsoft.Msagl.Drawing.Graph("graph"); // Initialize new MSAGL graph
                 FileContent.Text = ""; // Clear FileContent textbox
+                Course = new List<Courses>(); // Clear leftover Course content
                 // Read input file
                 using (StreamReader sr = new StreamReader(openFileDialog1.OpenFile()))
                 {
@@ -67,7 +68,7 @@ namespace LectureScheduler
                 {
                     BFS();
                 }
-                else
+                else if (radioButton2.Checked)
                 {
                     DFS();
                 }
@@ -180,10 +181,151 @@ namespace LectureScheduler
             }
         }
 
+        // Algorithms that will help the DFS algorithm
+        // Search an element of list of Courses by it's course name
+        public static int FindIndex(string name, List<Courses> list)
+        {
+            int idx = -1;
+            int i = 0;
+            while ((idx == -1) && (i < list.Count))
+            {
+                if (name == list[i].getCourses())
+                {
+                    idx = i;
+                }
+                i++;
+            }
+
+            return idx;
+        }
+
+        // Search an element of list of Courses by it's end time
+        public static int FindIndex2(int value, List<Courses> list)
+        {
+            int idx = -1;
+            int i = 0;
+            while ((idx == -1) && (i < list.Count))
+            {
+                if (value == list[i].getEndTime())
+                {
+                    idx = i;
+                }
+                i++;
+            }
+
+            return idx;
+        }
+
+        // Membership testing in a list of Courses
+        public static bool isMember(Courses course, List<Courses> list)
+        {
+            return (FindIndex(course.getCourses(), list) != -1);
+        }
+
         // DFS algorithm
         private void DFS()
         {
+            // Basic Course : list that holds all courses that has no prerequisite
+            List<Courses> basicCourse = new List<Courses>();
+            // Populate all courses that has no prerequisite
+            foreach (Courses elm in Course)
+            {
+                if (elm.isNoPreRequisite())
+                {
+                    basicCourse.Add(elm);
+                }
+            }
+            //Make list of nodes that can be access from one node
+            for (int i = 0; i < Course.Count; i++)
+            {
+                for (int j = 0; j < Course[i].getNumberOfPreRequisite(); j++)
+                {
+                    for (int k = 0; k < Course.Count; k++)
+                    {
+                        if ((i != k) && (Course[i].getPreReqCourses(j) == Course[k].getCourses()))
+                        {
+                            Course[k].addNextCourses(Course[i].getCourses());
+                        }
+                    }
+                }
+            }
 
+            //Make stack of temporary node/node that is going to be checked
+            List<string> CourseTemp = new List<string>();
+            for (int i = 0; i < basicCourse.Count; i++)
+            {
+                CourseTemp.Add(basicCourse[i].getCourses());
+            }
+
+            //Giving time stamp
+            int time = 1;
+            int idxT;
+            string name;
+            while (CourseTemp.Count > 0)
+            {
+                name = CourseTemp[CourseTemp.Count - 1];
+                idxT = FindIndex(name, Course);
+                if (Course[idxT].getStartTime() == 0)
+                {
+                    Course[idxT].setStartTime(time);
+                    time++;
+                }
+
+                if (Course[idxT].getNumberOfNextCourses() != 0)
+                {
+                    string next = Course[idxT].getNextCourses();
+                    int idxN = FindIndex(next, Course);
+                    if (Course[idxN].getEndTime() == 0)
+                    {
+                        CourseTemp.Add(next);
+                    }
+                }
+                else
+                {
+                    Course[idxT].setEndTime(time);
+                    // Set graph animation
+                    GraphAnim.Insert(0,new List<string>());
+                    GraphAnim[0].Add(Course[idxT].getCourses());
+                    CourseTemp.RemoveAt(CourseTemp.Count - 1);
+                    time++;
+                }
+            }
+
+            //Make new list with sorted courses
+            List<Courses> semesterCourse = new List<Courses>();
+            semesterCourse.AddRange(basicCourse);
+            List<int> listEndTime = new List<int>();
+            foreach (var crs in Course)
+            {
+                listEndTime.Add(crs.getEndTime());
+            }
+            for (int i = 0; i < Course.Count; i++)
+            {
+                int max = listEndTime.Max();
+                listEndTime.Remove(max);
+                int indeks = FindIndex2(max, Course);
+                if (!(isMember(Course[indeks], semesterCourse)))
+                {
+                    semesterCourse.Add(Course[indeks]);
+                }
+            }
+
+            // Formatting output
+            int semester = 1;
+            using (StreamWriter file_out = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + output_file))
+            {
+                SetupOutput(file_out);
+                file_out.WriteLine("<table border='1' style='width : 100%'>");
+                foreach (var sem in semesterCourse)
+                {
+                    file_out.WriteLine("<tr><td>Semester " + semester + "</td>");
+                    file_out.WriteLine("<td>" + sem.getCourses() + "</td></tr>");
+                    semester++;
+                }
+                file_out.WriteLine("</table>");
+                SetupEndOutput(file_out);
+            }
+            
         }
 
         // Setting up the first lines of the output file
@@ -245,13 +387,25 @@ namespace LectureScheduler
         private void radioButton1_CheckedChanged(object sender, EventArgs e) { }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e) { }
-        
+
         // "Auto Animation" button click
+        private bool stopAnim = false;
         private void AutoAnimGraph_Click(object sender, EventArgs e)
         {
-            var tm = new System.Threading.Thread(AutoAnimGraphThread);
-            tm.IsBackground = true;
-            tm.Start();
+            if (AutoAnimGraph.Text == "Stop auto animation")
+            {
+                stopAnim = true;
+                AutoAnimGraph.Text = "Auto Animation";
+                AutoAnimGraph.Enabled = true;
+            }
+            else
+            {
+                var tm = new System.Threading.Thread(AutoAnimGraphThread);
+                tm.IsBackground = true;
+                tm.Start();
+                AutoAnimGraph.Text = "Stop auto animation";
+            }
+            
         }
 
         // This is the part where the auto-animation actually do something
@@ -262,7 +416,9 @@ namespace LectureScheduler
                 System.Threading.Thread.Sleep(1000);
                 this.Invoke(new Action(() => AnimGraphNext.PerformClick()));
             }
-            while (AnimGraphNext.Enabled);
+            while (AnimGraphNext.Enabled && !stopAnim);
+            stopAnim = false;
+            this.Invoke(new Action(() => AutoAnimGraph.Text = "Auto Animation"));
         }
     }
 
@@ -272,6 +428,9 @@ namespace LectureScheduler
         private string course; // Stores the name of this course
         private List<string> preReqCourses = new List<string>(); // Stores names of this course's prerequisites
         private int numberOfPreRequisite; // The number of course prerequisite
+        private Queue<string> nextCourses = new Queue<string>();
+        private int start_time;
+        private int end_time;
 
         // ctor
         public Courses(string _course = "")
@@ -289,23 +448,58 @@ namespace LectureScheduler
             preReqCourses.Add(courses);
             numberOfPreRequisite++;
         }
+        public void addNextCourses(string courses)
+        {
+            nextCourses.Enqueue(courses);
+        }
         public void setNumberOfPreRequisite(int n)
         {
             this.numberOfPreRequisite = n;
+        }
+        public void setStartTime(int st)
+        {
+            this.start_time = st;
+        }
+        public void setEndTime(int et)
+        {
+            this.end_time = et;
         }
         //Getter
         public string getCourses()
         {
             return course;
         }
+        public int getStartTime()
+        {
+            return start_time;
+        }
+        public int getEndTime()
+        {
+            return end_time;
+        }
+        public string getPreReqCourses(int idx)
+        {
+            return preReqCourses[idx];
+        }
+        public string getNextCourses()
+        {
+            return (string)nextCourses.Dequeue();
+        }
         public int getNumberOfPreRequisite()
         {
             return numberOfPreRequisite;
         }
+        public int getNumberOfNextCourses()
+        {
+            return nextCourses.Count;
+        }
+        // Member function
+        // Check if this course has no prerequisite
         public bool isNoPreRequisite()
         {
             return numberOfPreRequisite == 0;
         }
+        // Check if a course is a prerequisite for this course
         public bool isPreRequisite(string s)
         {
             bool found = false;
@@ -323,7 +517,6 @@ namespace LectureScheduler
             }
             return found;
         }
-        // Member function
         // Format output
         public string FormatOutput()
         {
