@@ -41,6 +41,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.ResultBrowser = new System.Windows.Forms.WebBrowser();
             this.AutoAnimGraph = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.GraphPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -158,11 +159,11 @@
             this.ResultBrowser.Name = "ResultBrowser";
             this.ResultBrowser.Size = new System.Drawing.Size(386, 376);
             this.ResultBrowser.TabIndex = 10;
-            this.ResultBrowser.Url = new System.Uri("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\home.ht" +
-        "ml", System.UriKind.Absolute);
+            this.ResultBrowser.Url = new System.Uri("about:blank", System.UriKind.Absolute);
             // 
             // AutoAnimGraph
             // 
+            this.AutoAnimGraph.Enabled = false;
             this.AutoAnimGraph.Location = new System.Drawing.Point(586, 36);
             this.AutoAnimGraph.Name = "AutoAnimGraph";
             this.AutoAnimGraph.Size = new System.Drawing.Size(117, 19);
@@ -171,11 +172,24 @@
             this.AutoAnimGraph.UseVisualStyleBackColor = true;
             this.AutoAnimGraph.Click += new System.EventHandler(this.AutoAnimGraph_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Lucida Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label4.Location = new System.Drawing.Point(20, 74);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(235, 18);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Result will be displayed here.";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 450);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.AutoAnimGraph);
             this.Controls.Add(this.ResultBrowser);
             this.Controls.Add(this.radioButton2);
@@ -211,6 +225,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.WebBrowser ResultBrowser;
         private System.Windows.Forms.Button AutoAnimGraph;
+        private System.Windows.Forms.Label label4;
     }
 }
 

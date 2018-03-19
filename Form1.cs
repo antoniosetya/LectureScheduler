@@ -26,20 +26,25 @@ namespace LectureScheduler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            openFileDialog1.DefaultExt = ".txt";
-            DialogResult result = openFileDialog1.ShowDialog(); // Show file dialog
+            // Setting up the file dialog
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
+            openFileDialog1.Title = "Please select an input file...";
+            // Show file dialog
+            DialogResult result = openFileDialog1.ShowDialog();
+
             if (result == DialogResult.OK) // If the file dialog retrieves a file
             {
                 graph = new Microsoft.Msagl.Drawing.Graph("graph"); // Initialize new MSAGL graph
                 FileContent.Text = ""; // Clear FileContent textbox
+                // Read input file
                 using (StreamReader sr = new StreamReader(openFileDialog1.OpenFile()))
                 {
                     string line;
                     Courses temp;
-                    //Edge temp;
                     while (sr.Peek() >= 0)
                     {
-                        line = sr.ReadLine();
+                        line = sr.ReadLine(); // Read file line by line
                         line = line.Replace(".",string.Empty);
                         line = line.Replace(","," ");
                         string [] cur_line = line.Split(' ');
@@ -53,7 +58,6 @@ namespace LectureScheduler
                         }
                     }
                 }
-                label3.Visible = false;
                 // Re-initialize graph viewer and animation
                 DrawGraphFirstTime();
                 GraphAnim = new List<List<string>>();
@@ -67,9 +71,13 @@ namespace LectureScheduler
                 {
                     DFS();
                 }
-                // Enabling animation controls
+                // Setting animation controls
                 AnimGraphPrev.Enabled = false;
                 AnimGraphNext.Enabled = true;
+                AutoAnimGraph.Enabled = true;
+                // Hiding labels
+                label4.Visible = false;
+                label3.Visible = false;
                 // Showing output to browser
                 ResultBrowser.Url = new System.Uri(Directory.GetCurrentDirectory() + "\\" + output_file);
             }
@@ -94,10 +102,11 @@ namespace LectureScheduler
 
         private void DetachGraph()
         {
-            // De-Bind graph to viewer engine
+            // De-bind graph to viewer engine
             viewer.Graph = null;
         }
 
+        // BFS algorithm
         private void BFS()
         {
             List<string> semesterCourse = new List<string>();
@@ -113,7 +122,7 @@ namespace LectureScheduler
                 {
                     if (Course[i - linkCourse.Count].isNoPreRequisite())
                     {
-                        // Processing this node
+                        // Processing this node if there's no prerequisite
                         semesterCourse.Add(sems + Course[i - linkCourse.Count].getCourses());
                         linkCourse.Add(Course[i - linkCourse.Count].getCourses());
                         Course.RemoveAt(i - linkCourse.Count + 1);
@@ -171,13 +180,13 @@ namespace LectureScheduler
             }
         }
 
-
-
+        // DFS algorithm
         private void DFS()
         {
 
         }
 
+        // Setting up the first lines of the output file
         private void SetupOutput(StreamWriter outfile)
         {
             outfile.WriteLine("<!DOCTYPE html>");
@@ -188,6 +197,7 @@ namespace LectureScheduler
             outfile.WriteLine("<h3 align='center'>Result</h3>");
         }
 
+        // Puts the "closing lines" of the output file
         private void SetupEndOutput(StreamWriter outfile)
         {
             outfile.WriteLine("</body>");
@@ -196,6 +206,7 @@ namespace LectureScheduler
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e) { }
 
+        // "Next" button clicked
         private void AnimGraphNext_Click(object sender, EventArgs e)
         {
             CurAnimGraph++;
@@ -212,7 +223,8 @@ namespace LectureScheduler
                 AutoAnimGraph.Enabled = false;
             }
         }
-
+        
+        // "Previous" button clicked
         private void AnimGraphPrev_Click(object sender, EventArgs e)
         {
             CurAnimGraph--;
@@ -233,7 +245,8 @@ namespace LectureScheduler
         private void radioButton1_CheckedChanged(object sender, EventArgs e) { }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e) { }
-
+        
+        // "Auto Animation" button click
         private void AutoAnimGraph_Click(object sender, EventArgs e)
         {
             var tm = new System.Threading.Thread(AutoAnimGraphThread);
@@ -241,6 +254,7 @@ namespace LectureScheduler
             tm.Start();
         }
 
+        // This is the part where the auto-animation actually do something
         private void AutoAnimGraphThread()
         {
             do
@@ -255,9 +269,9 @@ namespace LectureScheduler
     // Class Courses
     public class Courses
     {
-        private string course;
-        private List<string> preReqCourses = new List<string>();
-        private int numberOfPreRequisite;
+        private string course; // Stores the name of this course
+        private List<string> preReqCourses = new List<string>(); // Stores names of this course's prerequisites
+        private int numberOfPreRequisite; // The number of course prerequisite
 
         // ctor
         public Courses(string _course = "")
