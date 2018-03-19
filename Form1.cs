@@ -18,6 +18,7 @@ namespace LectureScheduler
         Microsoft.Msagl.Drawing.Graph graph; // The graph that MSAGL accepts
         List<List<string>> GraphAnim; // "Animation" data, it stores which node(s) it should animate on each step
         int CurAnimGraph;
+        string output_file = "output.html";
 
         public Form1()
         {
@@ -63,12 +64,15 @@ namespace LectureScheduler
                 {
                     BFS();
                 }
-                /* else //radioButton2.Checked
+                else
                 {
-                    // DFS();
-                } */
+                    DFS();
+                }
+                // Enabling animation controls
                 AnimGraphPrev.Enabled = false;
                 AnimGraphNext.Enabled = true;
+                // Showing output to browser
+                ResultBrowser.Url = new System.Uri(Directory.GetCurrentDirectory() + "\\" + output_file);
             }
         }
 
@@ -76,7 +80,7 @@ namespace LectureScheduler
         {
             // Bind graph to viewer engine
             viewer.Graph = graph;
-            // Bind viewer engine to second window
+            // Bind viewer engine to the panel
             GraphPanel.SuspendLayout();
             viewer.Dock = System.Windows.Forms.DockStyle.Fill;
             GraphPanel.Controls.Add(viewer);
@@ -127,44 +131,71 @@ namespace LectureScheduler
                     }
                 }
             }
-            // Format output
-            int semester = 1;
-            FileContent.Text += "Semester " + semester + ":\n";
-            GraphAnim.Add(new List<string>()); // Initialize the first element of graph animation
-            for (int i = 0; i < semesterCourse.Count; i++)
+            // Format output to output.html
+            using (StreamWriter output = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + output_file))
             {
-                bool semesterN = true;
-                string nString = semester.ToString();
-                for (int j = 0; j < nString.Length; j++)
+                SetupOutput(output);
+                output.WriteLine("<table border='1' style='width : 100%'>");
+                output.WriteLine("<tr>");
+                int semester = 1;
+                output.WriteLine("<td>Semester " + semester + "</td>\n<td>");
+                GraphAnim.Add(new List<string>()); // Initialize the first element of graph animation
+                for (int i = 0; i < semesterCourse.Count; i++)
                 {
-                    if (nString[j] != semesterCourse[i][j])
+                    bool semesterN = true;
+                    string nString = semester.ToString();
+                    for (int j = 0; j < nString.Length; j++)
                     {
-                        semesterN = false;
+                        if (nString[j] != semesterCourse[i][j])
+                        {
+                            semesterN = false;
+                        }
                     }
+                    if (semesterN)
+                    {
+                        output.WriteLine(semesterCourse[i].Remove(0, semester.ToString().Length) + "<br>");
+                    }
+                    else
+                    {
+                        semester++;
+                        output.WriteLine("</td>\n</tr>\n<tr>");
+                        output.WriteLine("<td>Semester " + semester + "</td>");
+                        output.WriteLine("<td>" + semesterCourse[i].Remove(0, semester.ToString().Length) + "<br>");
+                        // Initialize the next element of list of graph animation
+                        GraphAnim.Add(new List<string>());
+                    }
+                    // Adding this node to graph animation
+                    GraphAnim[semester - 1].Add(semesterCourse[i].Remove(0, semester.ToString().Length));
                 }
-                if (semesterN)
-                {
-                    FileContent.Text += semesterCourse[i].Remove(0, semester.ToString().Length) + "\n";
-                }
-                else
-                {
-                    semester++;
-                    FileContent.Text += "Semester " + semester + ":\n";
-                    FileContent.Text += semesterCourse[i].Remove(0, semester.ToString().Length) + "\n";
-                    // Initialize the next element of list of graph animation
-                    GraphAnim.Add(new List<string>());  
-                }
-                // Adding this node to graph animation
-                GraphAnim[semester-1].Add(semesterCourse[i].Remove(0, semester.ToString().Length));
+                output.WriteLine("</table>");
+                SetupEndOutput(output);
             }
         }
 
 
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void DFS()
         {
 
         }
+
+        private void SetupOutput(StreamWriter outfile)
+        {
+            outfile.WriteLine("<!DOCTYPE html>");
+            outfile.WriteLine("<head>");
+            outfile.WriteLine("<meta name='viewport' content='width = device - width, initial - scale = 1.0'>");
+            outfile.WriteLine("</head>");
+            outfile.WriteLine("<body>");
+            outfile.WriteLine("<h3 align='center'>Result</h3>");
+        }
+
+        private void SetupEndOutput(StreamWriter outfile)
+        {
+            outfile.WriteLine("</body>");
+            outfile.WriteLine("</html>");
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e) { }
 
         private void AnimGraphNext_Click(object sender, EventArgs e)
         {
@@ -209,6 +240,7 @@ namespace LectureScheduler
         }
     }
 
+    // Class Courses
     public class Courses
     {
         private string course;

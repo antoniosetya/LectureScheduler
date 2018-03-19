@@ -39,6 +39,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.ResultBrowser = new System.Windows.Forms.WebBrowser();
             this.GraphPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,7 +64,8 @@
             this.FileContent.Name = "FileContent";
             this.FileContent.Size = new System.Drawing.Size(387, 376);
             this.FileContent.TabIndex = 2;
-            this.FileContent.Text = "Result will be displayed here.\nA new window will open to display the graph.";
+            this.FileContent.Text = "Result will be displayed here.";
+            this.FileContent.Visible = false;
             // 
             // GraphPanel
             // 
@@ -148,11 +150,21 @@
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
+            // ResultBrowser
+            // 
+            this.ResultBrowser.Location = new System.Drawing.Point(12, 62);
+            this.ResultBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.ResultBrowser.Name = "ResultBrowser";
+            this.ResultBrowser.Size = new System.Drawing.Size(386, 376);
+            this.ResultBrowser.TabIndex = 10;
+            this.ResultBrowser.Url = new System.Uri(System.IO.Directory.GetCurrentDirectory() + "\\home.html");
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 450);
+            this.Controls.Add(this.ResultBrowser);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.label2);
@@ -184,6 +196,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.WebBrowser ResultBrowser;
     }
 }
 
