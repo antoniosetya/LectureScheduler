@@ -40,6 +40,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.ResultBrowser = new System.Windows.Forms.WebBrowser();
+            this.AutoAnimGraph = new System.Windows.Forms.Button();
             this.GraphPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,13 +158,25 @@
             this.ResultBrowser.Name = "ResultBrowser";
             this.ResultBrowser.Size = new System.Drawing.Size(386, 376);
             this.ResultBrowser.TabIndex = 10;
-            this.ResultBrowser.Url = new System.Uri(System.IO.Directory.GetCurrentDirectory() + "\\home.html");
+            this.ResultBrowser.Url = new System.Uri("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\home.ht" +
+        "ml", System.UriKind.Absolute);
+            // 
+            // AutoAnimGraph
+            // 
+            this.AutoAnimGraph.Location = new System.Drawing.Point(586, 36);
+            this.AutoAnimGraph.Name = "AutoAnimGraph";
+            this.AutoAnimGraph.Size = new System.Drawing.Size(117, 19);
+            this.AutoAnimGraph.TabIndex = 11;
+            this.AutoAnimGraph.Text = "Auto Animation";
+            this.AutoAnimGraph.UseVisualStyleBackColor = true;
+            this.AutoAnimGraph.Click += new System.EventHandler(this.AutoAnimGraph_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 450);
+            this.Controls.Add(this.AutoAnimGraph);
             this.Controls.Add(this.ResultBrowser);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
@@ -197,6 +210,7 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.WebBrowser ResultBrowser;
+        private System.Windows.Forms.Button AutoAnimGraph;
     }
 }
 

@@ -6,7 +6,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LectureScheduler
@@ -210,6 +209,7 @@ namespace LectureScheduler
             if (CurAnimGraph == GraphAnim.Count)
             {
                 AnimGraphNext.Enabled = false;
+                AutoAnimGraph.Enabled = false;
             }
         }
 
@@ -217,6 +217,7 @@ namespace LectureScheduler
         {
             CurAnimGraph--;
             if (!AnimGraphNext.Enabled) AnimGraphNext.Enabled = true;
+            if (!AutoAnimGraph.Enabled) AutoAnimGraph.Enabled = true;
             DetachGraph();
             foreach (string affected_node in GraphAnim[CurAnimGraph])
             {
@@ -229,14 +230,25 @@ namespace LectureScheduler
             }
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) { }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e) { }
+
+        private void AutoAnimGraph_Click(object sender, EventArgs e)
         {
-            
+            var tm = new System.Threading.Thread(AutoAnimGraphThread);
+            tm.IsBackground = true;
+            tm.Start();
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void AutoAnimGraphThread()
         {
-            
+            do
+            {
+                System.Threading.Thread.Sleep(1000);
+                this.Invoke(new Action(() => AnimGraphNext.PerformClick()));
+            }
+            while (AnimGraphNext.Enabled);
         }
     }
 
