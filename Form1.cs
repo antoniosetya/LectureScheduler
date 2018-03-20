@@ -390,11 +390,16 @@ namespace LectureScheduler
 
         // "Auto Animation" button click
         private bool stopAnim = false;
-        private void AutoAnimGraph_Click(object sender, EventArgs e)
+        private System.Threading.Tasks.TaskCompletionSource<bool> AnimThreadStopped;
+        private async void AutoAnimGraph_Click(object sender, EventArgs e)
         {
             if (AutoAnimGraph.Text == "Stop auto animation")
             {
                 stopAnim = true;
+                AutoAnimGraph.Text = "Stopping...";
+                AutoAnimGraph.Enabled = false;
+                AnimThreadStopped = new System.Threading.Tasks.TaskCompletionSource<bool>();
+                await AnimThreadStopped.Task;
                 AutoAnimGraph.Text = "Auto Animation";
                 AutoAnimGraph.Enabled = true;
             }
@@ -417,7 +422,11 @@ namespace LectureScheduler
                 this.Invoke(new Action(() => AnimGraphNext.PerformClick()));
             }
             while (AnimGraphNext.Enabled && !stopAnim);
-            stopAnim = false;
+            if (stopAnim)
+            {
+                stopAnim = false;
+                AnimThreadStopped.SetResult(true);
+            }
             this.Invoke(new Action(() => AutoAnimGraph.Text = "Auto Animation"));
         }
     }
